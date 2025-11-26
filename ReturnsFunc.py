@@ -45,3 +45,8 @@ def dashboard(Tradfile):
     avg_monthly_volatility = np.std(returns)
 
     return avg_monthly_returns, avg_monthly_volatility
+
+
+if __name__ == "__main__":  # Only runs when executed directly for testing
+    print(dashboard("XLE.csv"))
+
