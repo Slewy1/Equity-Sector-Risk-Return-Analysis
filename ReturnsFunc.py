@@ -13,7 +13,7 @@ def dashboard(Tradfile):
 
         for row in csv_reader:
 
-            date = datetime.strptime(row['Date'], "%m/%d/%Y")
+            date = datetime.strptime(row['Date'], "%d/%m/%Y")
             dates.append(date)
             prices.append(float(row['Price']))
 
@@ -49,4 +49,5 @@ def dashboard(Tradfile):
 
 if __name__ == "__main__":  # Only runs when executed directly for testing
     print(dashboard("XLE.csv"))
+
 
