@@ -15,7 +15,9 @@ def dashboard(Tradfile):
 
             date = datetime.strptime(row['Date'], "%d/%m/%Y")
             dates.append(date)
-            prices.append(float(row['Price']))
+            clean_price = float(row['Price'].replace(
+                ",", ""))  # fix the comma issue with large prices
+            prices.append(clean_price)
 
     dates.reverse()
     prices.reverse()
