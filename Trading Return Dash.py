@@ -1,29 +1,54 @@
 import ReturnsFunc as rf
+import numpy as np
 import matplotlib.pyplot as plt
 
-avgE, volE = rf.dashboard("XLE.csv")
-avgF, volF = rf.dashboard("XLF.csv")
-avgK, volK = rf.dashboard("XLK.csv")
-avgP, volP = rf.dashboard("XLP.csv")
-avgV, volV = rf.dashboard("XLV.csv")
-# avgBTC, volBTC = rf.dashboard("BTCUSD.csv")
-avgGd, volGd = rf.dashboard("GLD.csv")
 
-results = {
-    "XLE": (avgE, volE),
-    "XLV": (avgV, volV),
-    "XLF": (avgF, volF),
-    # "BTC": (avgBTC, volBTC), 
-    "GLD": (avgGd, volGd)
-}
+data = ["XLE.csv", "XLF.csv", "XLK.csv",
+        "XLP.csv", "XLV.csv", "GLD.csv", "BTCUSD.csv"]
+results = {}
+
+for d in data:
+    avg, vol = rf.dashboard(d)
+    results[d.replace(".csv", "")] = (avg, vol)
 
 print(results)
 
-print(avgE, volE)
-print(avgV, volV)
-print(avgF, volF)
+ranking_avg = {}
+ranking_vol = {}
+
+for ret in data:
+    avg = results[ret.replace(".csv", "")][0]
+    ranking_avg[ret.replace(".csv", "")] = avg
+    vol = results[ret.replace(".csv", "")][1]
+    ranking_vol[ret.replace(".csv", "")] = vol
+
+print(ranking_avg)
+
+# ranks highest to lowest (best to worst)
+avgRank = sorted(ranking_avg.items(), key=lambda x: x[1], reverse=True)
+# ranks lowest to highest (best to worst)
+riskRank = sorted(ranking_vol.items(), key=lambda x: x[1])
+
+# ranking_avg.items(): turns dictionary → list of (name, return) pairs
+# key=lambda x: x[1]: sort based on the 2nd thing, which is the return
+
+for name, avg in avgRank:
+    print(name, f"{avg*100}%")
+for name, vol in riskRank:
+    print(name, f"{vol*100}%")
 
 
-plt.plot()
-plt.show
+x = np.array(list(ranking_avg.values()))
+y = np.array(list(ranking_vol.values()))
+label = list(results.keys())
+
+for i in range(len(label)):
+    plt.text(x[i] * 100, y[i] * 100, label[i])
+plt.scatter(x*100, y*100)
+
+plt.grid(True)
+plt.xlabel("Average Monthly Return %")
+plt.ylabel("Average Monthly Volatility %")
+plt.title("Trading Risk Return Scatterplot")
+plt.show()
 
