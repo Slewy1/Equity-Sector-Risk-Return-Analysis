@@ -43,12 +43,14 @@ y = np.array(list(ranking_vol.values()))
 label = list(results.keys())
 
 for i in range(len(label)):
-    plt.text(x[i] * 100, y[i] * 100, label[i])
-plt.scatter(x*100, y*100)
+    plt.scatter(x[i] * 100, y[i] * 100)
+    plt.text(x[i] * 100 + 0.05, y[i] * 100 - 0.15, label[i], fontweight="bold")
+
 
 plt.grid(True)
 plt.xlabel("Average Monthly Return %")
 plt.ylabel("Average Monthly Volatility %")
 plt.title("Trading Risk Return Scatterplot")
 plt.show()
+
 
