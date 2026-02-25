@@ -44,28 +44,24 @@ y = np.array(list(ranking_vol.values()))
 label = list(results.keys())
 
 plt.style.use('dark_background')
-plt.figure(figsize=(16, 9))
+fig, ax = plt.subplots(figsize=(16, 9))  # create both figure and axes together
 for i in range(len(label)):
-    plt.scatter(x[i] * 100, y[i] * 100, s=80, edgecolor='w')
-    plt.text(x[i] * 100 + 0.015, y[i] * 100 -
-             0.01, label[i], fontweight="bold", fontsize=11)
-plt.gca().invert_yaxis()
-plt.xlim(0, 2)
-plt.ylim(3, 9)
+    ax.scatter(x[i] * 100, y[i] * 100, s=80, edgecolor='w')
+    ax.text(x[i] * 100 + 0.015, y[i] * 100 -
+            0.01, label[i], fontweight="bold", fontsize=11)
+ax.invert_yaxis()
 
-limits_x = plt.xlim(0, 2)
-limits_y = plt.ylim(3, 9)
+limits_x = ax.get_xlim()
+limits_y = ax.get_ylim()
+mid_x = (limits_x[0] + limits_x[1]) / 2
+mid_y = (limits_y[0] + limits_y[1]) / 2
 
-mid_x = (limits_x[1] - limits_x[0])/2
-mid_y = (limits_y[1] - limits_y[0])/2
+ax.axvline(x=mid_x, color='w', linewidth=3)
+ax.axhline(y=mid_y, color='w', linewidth=3)
 
-plt.axvline(x=1, color='r', label='axvline - full height',
-            linewidth=4)
-plt.axhline(y=6, color='r', label='axvline - full height',
-            linewidth=4)
 
-plt.grid(True)
-plt.xlabel("Average Monthly Return %")
-plt.ylabel("Average Monthly Volatility %")
-plt.title("Trading Risk Return Scatterplot")
+ax.set_xlabel("Average Monthly Return %", fontsize=15)
+ax.set_ylabel("Average Monthly Volatility %", fontsize=15)
+ax.set_title("Trading Risk Return Scatterplot",
+             fontsize=20, color='w', loc='left', style='italic')
 plt.show()
