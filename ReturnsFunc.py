@@ -1,13 +1,13 @@
 import csv
 from datetime import datetime
 import numpy as np
-
+import os
 
 def dashboard(Tradfile):
     dates = []
     prices = []
 
-    with open(f"E:\\Python stuff\\Project1\\{Tradfile}", newline="", encoding="utf-8-sig") as file:
+    with open(os.path.join(os.path.dirname(__file__), Tradfile), newline="", encoding="utf-8-sig") as file:
 
         csv_reader = csv.DictReader(file)
 
@@ -51,5 +51,6 @@ def dashboard(Tradfile):
 
 if __name__ == "__main__":  # Only runs when executed directly for testing
     print(dashboard("XLE.csv"))
+
 
 
