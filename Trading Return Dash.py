@@ -56,10 +56,15 @@ limits_y = ax.get_ylim()
 mid_x = (limits_x[0] + limits_x[1]) / 2
 mid_y = (limits_y[0] + limits_y[1]) / 2
 
-ax.axvline(x=mid_x, color='w', linewidth=3)
-ax.axhline(y=mid_y, color='w', linewidth=3)
+ax.axvline(x=mid_x, color='w', linewidth=3, linestyle="--")
+ax.axhline(y=mid_y, color='w', linewidth=3, linestyle="--")
+ax.text(1.02, 3.55, 'Low Volatility', fontweight="bold", fontsize=12)
+ax.text(1.02, 8.65, 'High Volatility', fontweight="bold", fontsize=12)
+ax.text(0.31, 6, 'Low Return', fontweight="bold", fontsize=12)
+ax.text(1.58, 6, 'High Return', fontweight="bold", fontsize=12)
+# ax.annotate("LOL", (1.5, 4), xytext=(1.2, 5), arrowprops=dict())
 
-
+ax.tick_params(labelsize=15)
 ax.set_xlabel("Average Monthly Return %", fontsize=15)
 ax.set_ylabel("Average Monthly Volatility %", fontsize=15)
 ax.set_title("Trading Risk Return Scatterplot",
