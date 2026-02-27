@@ -49,20 +49,29 @@ for i in range(len(label)):
     ax.scatter(x[i] * 100, y[i] * 100, s=80, edgecolor='w')
     ax.text(x[i] * 100 + 0.015, y[i] * 100 -
             0.01, label[i], fontweight="bold", fontsize=11)
-ax.invert_yaxis()
 
+ax.invert_yaxis()
 limits_x = ax.get_xlim()
 limits_y = ax.get_ylim()
 mid_x = (limits_x[0] + limits_x[1]) / 2
 mid_y = (limits_y[0] + limits_y[1]) / 2
 
-ax.axvline(x=mid_x, color='w', linewidth=3, linestyle="--")
-ax.axhline(y=mid_y, color='w', linewidth=3, linestyle="--")
-ax.text(1.02, 3.55, 'Low Volatility', fontweight="bold", fontsize=12)
-ax.text(1.02, 8.65, 'High Volatility', fontweight="bold", fontsize=12)
-ax.text(0.31, 6, 'Low Return', fontweight="bold", fontsize=12)
-ax.text(1.58, 6, 'High Return', fontweight="bold", fontsize=12)
-# ax.annotate("LOL", (1.5, 4), xytext=(1.2, 5), arrowprops=dict())
+# ax.axvline(x=mid_x, color='w', linewidth=3, linestyle="--")
+# ax.axhline(y=mid_y, color='w', linewidth=3, linestyle="--")
+
+ax.annotate("", (mid_x, limits_y[0]-0.35), xytext=(mid_x, limits_y[1]+0.35),
+            arrowprops=dict(arrowstyle="<->", linewidth=3, color='w'))
+ax.annotate("", (limits_x[0]+0.1, mid_y), xytext=(limits_x[1]-0.1, mid_y),
+            arrowprops=dict(arrowstyle="<->", linewidth=3, color='w'))
+
+ax.text(mid_x, 3.7, 'Low Volatility',
+        fontweight="bold", fontsize=12, ha='center')
+ax.text(mid_x, 8.6, 'High Volatility',
+        fontweight="bold", fontsize=12, ha='center')
+ax.text(0.35, mid_y+0.1, 'Low \nReturn',
+        fontweight="bold", fontsize=12, ha='center')
+ax.text(1.67, mid_y+0.1, 'High \nReturn',
+        fontweight="bold", fontsize=12, ha='center')
 
 ax.tick_params(labelsize=15)
 ax.set_xlabel("Average Monthly Return %", fontsize=15)
