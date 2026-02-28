@@ -43,12 +43,15 @@ x = np.array(list(ranking_avg.values()))
 y = np.array(list(ranking_vol.values()))
 label = list(results.keys())
 
-plt.style.use('dark_background')
+
 fig, ax = plt.subplots(figsize=(16, 9))  # create both figure and axes together
+ax.set_facecolor("#0E0E0E")
+fig.patch.set_facecolor("#242424")
+bbox = dict(boxstyle="round,pad=0.5", fc="#3E3E3E", ec="w", lw=2, alpha=0.8)
 for i in range(len(label)):
-    ax.scatter(x[i] * 100, y[i] * 100, s=80, edgecolor='w')
-    ax.text(x[i] * 100 + 0.015, y[i] * 100 -
-            0.01, label[i], fontweight="bold", fontsize=11)
+    ax.scatter(x[i] * 100, y[i] * 100, s=200, edgecolor='w')
+    ax.text(x[i] * 100 + 0.025, y[i] * 100 -
+            0.05, label[i], fontweight="bold", fontsize=11, bbox=bbox, color='w')
 
 ax.invert_yaxis()
 limits_x = ax.get_xlim()
@@ -65,17 +68,18 @@ ax.annotate("", (limits_x[0]+0.1, mid_y), xytext=(limits_x[1]-0.1, mid_y),
             arrowprops=dict(arrowstyle="<->", linewidth=3, color='w'))
 
 ax.text(mid_x, 3.7, 'Low Volatility',
-        fontweight="bold", fontsize=12, ha='center')
+        fontweight="bold", fontsize=12, ha='center',color="#00a9dce4")
 ax.text(mid_x, 8.6, 'High Volatility',
-        fontweight="bold", fontsize=12, ha='center')
+        fontweight="bold", fontsize=12, ha='center',color="#ff5454d3")
 ax.text(0.35, mid_y+0.1, 'Low \nReturn',
-        fontweight="bold", fontsize=12, ha='center')
+        fontweight="bold", fontsize=12, ha='center',color="#ffcc00e6")
 ax.text(1.67, mid_y+0.1, 'High \nReturn',
-        fontweight="bold", fontsize=12, ha='center')
+        fontweight="bold", fontsize=12, ha='center',color="#2bff06a0")
 
-ax.tick_params(labelsize=15)
-ax.set_xlabel("Average Monthly Return %", fontsize=15)
-ax.set_ylabel("Average Monthly Volatility %", fontsize=15)
+ax.grid(True, color='grey', linestyle='--', linewidth=0.5)
+ax.tick_params(labelsize=15, colors='w')
+ax.set_xlabel("Average Monthly Return %", fontsize=15,color='w',fontweight="bold")
+ax.set_ylabel("Average Monthly Volatility %", fontsize=15,color='w',fontweight="bold")
 ax.set_title("Trading Risk Return Scatterplot",
-             fontsize=20, color='w', loc='left', style='italic')
+             fontsize=25, color='w', loc='left', style='italic', fontweight="bold")
 plt.show()
