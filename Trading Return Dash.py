@@ -6,13 +6,19 @@ import matplotlib.pyplot as plt
 # data = ["XLE.csv", "XLF.csv", "XLK.csv", "XLP.csv", "XLV.csv", "GLD.csv", "BTCUSD.csv"]
 data = ["XLE.csv", "XLF.csv", "XLK.csv",
         "XLP.csv", "XLV.csv", "GLD.csv"]
+sector_names = {
+    'XLE': 'Energy',
+    'XLF': 'Finance',
+    'XLK': 'Tech',
+    'XLP': 'Consumer Staples',
+    'XLV': 'Healthcare',
+    'GLD': 'Gold'
+}
 results = {}
 
 for d in data:
     avg, vol = rf.dashboard(d)
     results[d.replace(".csv", "")] = (avg, vol)
-
-print(results)
 
 ranking_avg = {}
 ranking_vol = {}
@@ -23,8 +29,6 @@ for ret in data:
     vol = results[ret.replace(".csv", "")][1]
     ranking_vol[ret.replace(".csv", "")] = vol
 
-print(ranking_avg)
-
 # ranks highest to lowest (best to worst)
 avgRank = sorted(ranking_avg.items(), key=lambda x: x[1], reverse=True)
 # ranks lowest to highest (best to worst)
@@ -34,14 +38,14 @@ riskRank = sorted(ranking_vol.items(), key=lambda x: x[1])
 # key=lambda x: x[1]: sort based on the 2nd thing, which is the return
 
 for name, avg in avgRank:
-    print(name, f"{avg*100}%")
+    print(sector_names[name], f"{round(avg*100, 2)}%")
 for name, vol in riskRank:
-    print(name, f"{vol*100}%")
+    print(sector_names[name], f"{round(vol*100, 2)}%")
 
 
 x = np.array(list(ranking_avg.values()))
 y = np.array(list(ranking_vol.values()))
-label = list(results.keys())
+label = list(sector_names.values())
 
 
 fig, ax = plt.subplots(figsize=(16, 9))  # create both figure and axes together
@@ -50,6 +54,7 @@ fig.patch.set_facecolor("#242424")
 bbox = dict(boxstyle="round,pad=0.5", fc="#3E3E3E", ec="w", lw=2, alpha=0.8)
 for i in range(len(label)):
     ax.scatter(x[i] * 100, y[i] * 100, s=200, edgecolor='w')
+
     ax.text(x[i] * 100 + 0.025, y[i] * 100 -
             0.05, label[i], fontweight="bold", fontsize=11, bbox=bbox, color='w')
 
@@ -68,18 +73,23 @@ ax.annotate("", (limits_x[0]+0.1, mid_y), xytext=(limits_x[1]-0.1, mid_y),
             arrowprops=dict(arrowstyle="<->", linewidth=3, color='w'))
 
 ax.text(mid_x, 3.7, 'Low Volatility',
-        fontweight="bold", fontsize=12, ha='center',color="#00a9dce4")
+        fontweight="bold", fontsize=12, ha='center', color="#00a9dce4")
 ax.text(mid_x, 8.6, 'High Volatility',
-        fontweight="bold", fontsize=12, ha='center',color="#ff5454d3")
+        fontweight="bold", fontsize=12, ha='center', color="#ff5454d3")
 ax.text(0.35, mid_y+0.1, 'Low \nReturn',
-        fontweight="bold", fontsize=12, ha='center',color="#ffcc00e6")
+        fontweight="bold", fontsize=12, ha='center', color="#ffcc00e6")
 ax.text(1.67, mid_y+0.1, 'High \nReturn',
-        fontweight="bold", fontsize=12, ha='center',color="#2bff06a0")
+        fontweight="bold", fontsize=12, ha='center', color="#2bff06a0")
 
 ax.grid(True, color='grey', linestyle='--', linewidth=0.5)
 ax.tick_params(labelsize=15, colors='w')
-ax.set_xlabel("Average Monthly Return %", fontsize=15,color='w',fontweight="bold")
-ax.set_ylabel("Average Monthly Volatility %", fontsize=15,color='w',fontweight="bold")
+ax.set_xlabel("Average Monthly Return %", fontsize=15,
+              color='w', fontweight="bold")
+ax.set_ylabel("Average Monthly Volatility %",
+              fontsize=15, color='w', fontweight="bold")
 ax.set_title("Trading Risk Return Scatterplot",
              fontsize=25, color='w', loc='left', style='italic', fontweight="bold")
+
+fig.savefig('RiskReturn Scatterplot.png', dpi=150, bbox_inches='tight')
 plt.show()
+
