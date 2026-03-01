@@ -1,4 +1,4 @@
-# **Equity Sector Risk-Return Anlysis**
+# **Equity Sector Risk-Return Analysis**
 
 ## **Overview**
 This project analyses 10 years of historical data across five major industry sectors — Energy, Healthcare, Consumer Staples, Tech and Finance — calculating average monthly return and volatility for each. Results are plotted on an interactive scatter plot for direct comparison, alongside popular alternative investments such as Gold and Bitcoin.
