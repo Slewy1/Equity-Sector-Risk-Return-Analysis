@@ -1,6 +1,7 @@
 import ReturnsFunc as rf
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 
 # data = ["XLE.csv", "XLF.csv", "XLK.csv", "XLP.csv", "XLV.csv", "GLD.csv", "BTCUSD.csv"]
@@ -90,6 +91,7 @@ ax.set_ylabel("Average Monthly Volatility %",
 ax.set_title("Trading Risk Return Scatterplot",
              fontsize=25, color='w', loc='left', style='italic', fontweight="bold")
 
-fig.savefig('RiskReturn Scatterplot.png', dpi=150, bbox_inches='tight')
+save_path = os.path.join(os.path.dirname(__file__), 'RiskReturn Scatterplot.png')
+fig.savefig(save_path, dpi=300, bbox_inches='tight')
 plt.show()
 
